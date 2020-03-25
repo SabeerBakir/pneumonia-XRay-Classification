@@ -9,7 +9,8 @@ import torch.nn as nn
 from torch.utils.data import Dataset, DataLoader
 
 from torchvision import transforms, utils
-from torchvision.transforms import functional as F
+from torchvision.transforms import functional as transf_f
+import torch.nn.functional as F
 
 import pandas as pd
 
@@ -104,20 +105,20 @@ class Pad(object):
 
         padding = max_image_size - np.array(image.size)
         padding = tuple(padding // 2)
-        new_image = F.pad(image, padding, self.fill, 'constant')
+        new_image = transf_f.pad(image, padding, self.fill, 'constant')
         if new_image.size is not self.padding:
             # check for odd height
             if (new_image.size[0] % 2 != 0) and (new_image.size[1] % 2 == 0):
                 padding = (padding[0], padding[1], padding[0] + 1, padding[1])
-                new_image = F.pad(image, padding, self.fill, 'constant')
+                new_image = transf_f.pad(image, padding, self.fill, 'constant')
             # check for odd width
             elif (new_image.size[0] % 2 == 0) and (new_image.size[1] % 2 != 0):
                 padding = (padding[0], padding[1], padding[0], padding[1] + 1)
-                new_image = F.pad(image, padding, self.fill, 'constant')
+                new_image = transf_f.pad(image, padding, self.fill, 'constant')
             # check for both odd height and width
             elif (new_image.size[0] % 2 != 0) and (new_image.size[1] % 2 != 0):
                 padding = (padding[0], padding[1], padding[0] + 1, padding[1] + 1)
-                new_image = F.pad(image, padding, self.fill, 'constant')
+                new_image = transf_f.pad(image, padding, self.fill, 'constant')
 
         return {'image': new_image, 'class': img['class']}
 
@@ -170,9 +171,9 @@ class Net(nn.Module):
 
     def forward(self, x):
         # Max pooling over a (2, 2) window
-        x = F.max_pool2d(F.relu(self.conv1(x)), (2, 2))
+        x = F.max_pool2d(F.relu(self.conv1(x.float())), (2, 2))
         # If the size is a square you can only specify a single number
-        x = F.max_pool2d(F.relu(self.conv2(x)), 2)
+        x = F.max_pool2d(F.relu(self.conv2(x.float())), 2)
         x = x.view(-1, self.num_flat_features(x))
         x = F.relu(self.fc1(x))
         x = F.relu(self.fc2(x))
@@ -186,3 +187,24 @@ class Net(nn.Module):
             num_features *= s
         return num_features
 
+
+def value_counts(data_folder):
+    """Outputs value counts
+
+    :param data_folder: Folder containing data.
+    """
+    classes = os.listdir(data_folder)
+
+    for label in classes:
+        print(label + ': ' + str(len([i for i in os.listdir(data_folder + os.sep + label) if i.endswith('.jpeg')])))
+
+
+def label_to_num(labels):
+    """
+    Function to return numeric labels
+
+    :param labels: an array of labels
+    :return: an array of numbers instead of labels
+    """
+
+    return np.array(list(map(lambda x: 0 if x == 'NORMAL' else 1, labels)))
