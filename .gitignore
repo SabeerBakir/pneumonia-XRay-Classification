@@ -6,3 +6,5 @@ Data/train/NORMAL/.ipynb_checkpoints/
 Code/__pycache__/
 
 .idea/
+
+*.jpeg
