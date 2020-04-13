@@ -6,7 +6,7 @@ default: &DEFAULT
 CNN:
   <<: *DEFAULT
   model_name: cnn
-  data_dir: "chest_xray"
+  data_dir: "../Datasets/chest_xray"
   checkpoint_dir: "checkpoints/cnn"
   log_dir: 'logs/cnn'
   dataset_class: "XRayDataset"
@@ -38,7 +38,7 @@ ResNext:
   log_dir: 'logs/resnext'
   dataset_class: "XRayDataset"
   gpu_vis_dev: '0'
-  num_epochs: 25
-  batch_size: 4
+  num_epochs: 10
+  batch_size: 8
   transforms: ResNext_Transforms
   lr: 0.0001
