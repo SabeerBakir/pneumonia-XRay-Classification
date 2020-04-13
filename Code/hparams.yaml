@@ -13,4 +13,5 @@ CNN:
   gpu_vis_dev: '0'
   num_epochs: 10
   batch_size: 16
+  transforms: CNN_Transforms
   lr: 0.0001

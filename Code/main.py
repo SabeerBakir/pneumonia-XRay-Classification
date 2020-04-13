@@ -9,7 +9,6 @@ import torch.nn as nn
 import torch.optim as optim
 import torch.nn.functional as F
 from torch.utils.data import DataLoader
-from torchvision import datasets, transforms
 
 import numpy as np
 import pandas as pd
@@ -20,6 +19,7 @@ from sklearn.metrics import accuracy_score
 import models
 from utils import Datasets
 from utils.params import Params
+from utils import model_transforms
 from utils.plotting import plot_training
 
 
@@ -73,12 +73,7 @@ def main():
     # This is useful if you have multiple custom datasets defined. 
     Dataset = getattr(Datasets, params.dataset_class)
 
-    transf = transforms.Compose([
-        transforms.Grayscale(),
-        transforms.RandomResizedCrop(224),
-        transforms.RandomHorizontalFlip(),
-        transforms.ToTensor()
-    ])
+    transf = getattr(model_transforms, params.transforms)()
     train_data = Dataset(params.data_dir + "/train", transform=transf)
     val_data = Dataset(params.data_dir + "/val", transform=transf)
 
