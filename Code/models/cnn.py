@@ -74,8 +74,8 @@ def val(model, device, val_loader, checkpoint=None):
     loss = np.mean(losses)
     preds = np.argmax(np.concatenate(preds), axis=1)
     targets  = np.concatenate(targets)
-    acc = accuracy_score(targets, preds)
-    return loss, acc
+    roc_auc = roc_auc_score(targets, preds)
+    return loss, roc_auc
 
 
 def test(model, device, test_loader, checkpoint=None):
@@ -95,6 +95,5 @@ def test(model, device, test_loader, checkpoint=None):
         
     preds = np.argmax(np.concatenate(preds), axis=1)
     targets  = np.concatenate(targets)
-    acc = accuracy_score(targets, preds)
-    return acc
-
+    roc_auc = roc_auc_score(targets, preds)
+    return roc_auc

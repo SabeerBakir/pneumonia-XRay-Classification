@@ -7,7 +7,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
 from tqdm import tqdm
-from sklearn.metrics import accuracy_score, roc_auc_score
+from sklearn.metrics import roc_auc_score
 
 
 def net(freeze_layers=True):
@@ -64,11 +64,9 @@ def val(model, device, val_loader, checkpoint=None):
     loss = np.mean(losses)
     preds = np.argmax(np.concatenate(preds), axis=1)
     targets  = np.concatenate(targets)
-    # acc = accuracy_score(targets, preds)
     auc_roc = roc_auc_score(targets, preds)
-    # return loss, acc
     return loss, auc_roc
-
+ 
 
 def test(model, device, test_loader, checkpoint=None):
     if checkpoint is not None:
@@ -87,7 +85,5 @@ def test(model, device, test_loader, checkpoint=None):
         
     preds = np.argmax(np.concatenate(preds), axis=1)
     targets  = np.concatenate(targets)
-    # acc = accuracy_score(targets, preds)
     auc_roc = roc_auc_score(targets, preds)
-    # return acc
     return auc_roc

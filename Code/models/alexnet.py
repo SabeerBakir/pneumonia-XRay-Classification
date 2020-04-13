@@ -75,4 +75,3 @@ def test(model, device, test_loader, checkpoint=None):
     targets  = np.concatenate(targets)
     roc_auc = roc_auc_score(targets, preds)
     return roc_auc
-
