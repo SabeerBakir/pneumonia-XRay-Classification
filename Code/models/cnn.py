@@ -7,7 +7,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
 from tqdm import tqdm
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import roc_auc_score
 '''
 Part of format and full model from pytorch examples repo: https://github.com/pytorch/examples/blob/master/mnist/main.py
 '''
