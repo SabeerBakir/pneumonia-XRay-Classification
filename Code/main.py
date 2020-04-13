@@ -14,7 +14,6 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.utils import shuffle
-from sklearn.metrics import accuracy_score
 
 import models
 from utils import Datasets
@@ -91,27 +90,27 @@ def main():
     if not os.path.exists(params.checkpoint_dir): os.makedirs(params.checkpoint_dir)
     if not os.path.exists("figs"): os.makedirs("figs")
 
-    val_accs = []
+    val_roc_aucs = []
     val_losses = []
     train_losses = []
-    train_accs = []
+    train_roc_aucs = []
     for epoch in range(1, params.num_epochs + 1):
         print("Epoch: {}".format(epoch))
         # Call training function. 
         train(model, device, train_loader, optimizer)
         # Evaluate on both the training and validation set. 
-        train_loss, train_acc = val(model, device, train_loader)
-        val_loss, val_acc = val(model, device, val_loader)
+        train_loss, train_roc_auc = val(model, device, train_loader)
+        val_loss, val_roc_auc = val(model, device, val_loader)
         # Collect some data for logging purposes. 
         train_losses.append(float(train_loss))
-        train_accs.append(train_acc)
+        train_roc_aucs.append(train_roc_auc)
         val_losses.append(float(val_loss))
-        val_accs.append(val_acc)
+        val_roc_aucs.append(val_roc_auc)
 
-        print('\n\ttrain Loss: {:.6f}\ttrain acc: {:.6f} \n\tval Loss: {:.6f}\tval acc: {:.6f}'.format(train_loss, train_acc, val_loss, val_acc))
+        print('\n\ttrain Loss: {:.6f}\ttrain roc_auc: {:.6f} \n\tval Loss: {:.6f}\tval roc_auc: {:.6f}'.format(train_loss, train_roc_auc, val_loss, val_roc_auc))
         # Here is a simply plot for monitoring training. 
         # Clear plot each epoch 
-        fig = plot_training(train_losses, train_accs,val_losses, val_accs)
+        fig = plot_training(train_losses, train_roc_aucs, val_losses, val_roc_aucs)
         fig.savefig(os.path.join("figs", "{}_training_vis".format(args.model_name)))
         # Save model every few epochs (or even more often if you have the disk space).
         if epoch % 5 == 0:
@@ -120,10 +119,10 @@ def main():
     logs ={
         "model": args.model_name,
         "train_losses": train_losses,
-        "train_accs": train_accs,
+        "train_roc_aucs": train_roc_aucs,
         "val_losses": val_losses,
-        "val_accs": val_accs,
-        "best_val_epoch": int(np.argmax(val_accs)+1),
+        "val_roc_aucs": val_roc_aucs,
+        "best_val_epoch": int(np.argmax(val_roc_aucs)+1),
         "model": args.model_name,
         "lr": params.lr,
         "batch_size":params.batch_size
