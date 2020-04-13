@@ -14,6 +14,7 @@ CNN:
   num_epochs: 10
   batch_size: 16
   transforms: CNN_Transforms
+  net_args: None
   lr: 0.0001
 
 AlexNet:
@@ -41,4 +42,5 @@ ResNext:
   num_epochs: 10
   batch_size: 8
   transforms: ResNext_Transforms
+  net_args: {freeze_layers: True}
   lr: 0.0001

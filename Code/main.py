@@ -47,7 +47,7 @@ def main():
     
     # Load model that has been chosen via the command line arguments. 
     model_module = __import__('.'.join(['models', params.model_name]),  fromlist=['object'])
-    model = model_module.net()
+    model = model_module.net(params.net_args)
     # Send the model to the chosen device. 
     # To use multiple GPUs
     # model = nn.DataParallel(model)
@@ -86,9 +86,10 @@ def main():
         batch_size=params.batch_size,
         shuffle=False
     )
-    if not os.path.exists(params.log_dir): os.makedirs(params.log_dir)
-    if not os.path.exists(params.checkpoint_dir): os.makedirs(params.checkpoint_dir)
-    if not os.path.exists("figs"): os.makedirs("figs")
+    os.makedirs(params.log_dir, exist_ok=True)
+    os.makedirs(params.checkpoint_dir, exist_ok=True)
+    os.makedirs(params.data_dir, exist_ok=True)
+    os.makedirs("figs", exist_ok=True)
 
     val_roc_aucs = []
     val_losses = []
@@ -114,10 +115,12 @@ def main():
         fig.savefig(os.path.join("figs", "{}_training_vis".format(args.model_name)))
         # Save model every few epochs (or even more often if you have the disk space).
         if epoch % 5 == 0:
-            torch.save(model.state_dict(), os.path.join(params.checkpoint_dir,"checkpoint_{}_epoch_{}".format(args.model_name,epoch)))
+            torch.save(model.state_dict(), os.path.join(params.checkpoint_dir, "checkpoint_{}_epoch_{}".
+                                                        format(args.model_name, epoch)))
     # Some log information to help you keep track of your model information. 
     logs ={
         "model": args.model_name,
+        "net_args": params.net_args,
         "train_losses": train_losses,
         "train_roc_aucs": train_roc_aucs,
         "val_losses": val_losses,
@@ -125,7 +128,7 @@ def main():
         "best_val_epoch": int(np.argmax(val_roc_aucs)+1),
         "model": args.model_name,
         "lr": params.lr,
-        "batch_size":params.batch_size
+        "batch_size": params.batch_size
     }
 
     with open(os.path.join(params.log_dir,"{}_{}.json".format(args.model_name,  start_time)), 'w') as f:
