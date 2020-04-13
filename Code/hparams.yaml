@@ -15,3 +15,30 @@ CNN:
   batch_size: 16
   transforms: CNN_Transforms
   lr: 0.0001
+
+AlexNet:
+  <<: *DEFAULT
+  model_name: alexnet
+  data_dir: "chest_xray"
+  checkpoint_dir: "checkpoints/alexnet"
+  log_dir: 'logs/alexnet'
+  dataset_class: "XRayDataset"
+  gpu_vis_dev: '0'
+  num_epochs: 10
+  batch_size: 16
+  transforms: AlexNet_Transforms
+  net_args: None
+  lr: 0.0001
+
+ResNext:
+  <<: *DEFAULT
+  model_name: resnext
+  data_dir: "chest_xray"
+  checkpoint_dir: "checkpoints/resnext"
+  log_dir: 'logs/resnext'
+  dataset_class: "XRayDataset"
+  gpu_vis_dev: '0'
+  num_epochs: 25
+  batch_size: 4
+  transforms: ResNext_Transforms
+  lr: 0.0001

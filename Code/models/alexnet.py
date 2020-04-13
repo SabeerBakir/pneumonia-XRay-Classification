@@ -10,14 +10,9 @@ from tqdm import tqdm
 from sklearn.metrics import accuracy_score
 
 
-class net(nn.Module):
-    def __init__(self):
-        super(net, self).__init__()
-
-
-    def forward(self, x):
-
-        return None
+def net():
+    model = torch.hub.load('pytorch/vision:v0.5.0', 'alexnet', pretrained=True)
+    return model
 
 
 def train(model, device, train_loader, optimizer):
