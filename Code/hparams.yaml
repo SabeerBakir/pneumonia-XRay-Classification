@@ -19,7 +19,7 @@ CNN:
 AlexNet:
   <<: *DEFAULT
   model_name: alexnet
-  data_dir: "chest_xray"
+  data_dir: "../Datasets/chest_xray"
   checkpoint_dir: "checkpoints/alexnet"
   log_dir: 'logs/alexnet'
   dataset_class: "XRayDataset"
@@ -33,7 +33,7 @@ AlexNet:
 ResNext:
   <<: *DEFAULT
   model_name: resnext
-  data_dir: "chest_xray"
+  data_dir: "../Datasets/chest_xray"
   checkpoint_dir: "checkpoints/resnext"
   log_dir: 'logs/resnext'
   dataset_class: "XRayDataset"
