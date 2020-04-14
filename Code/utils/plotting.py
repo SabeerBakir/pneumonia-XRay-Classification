@@ -8,7 +8,7 @@ def plot_training(train_losses, train_roc_aucs, val_losses, val_roc_aucs, model_
     train_losses (list): List of training losses over training.
     train_roc_aucs (list): List of training ROC AUCs over training.
     val_losses (list): List of validation losses over training.
-    val_roc_aucs (list):List of validation ROC AUCs over training.
+    val_roc_aucs (list): List of validation ROC AUCs over training.
     model_name (str): Name of model as a string.
     return_fig (Boolean): Whether to return figure or not.
     """

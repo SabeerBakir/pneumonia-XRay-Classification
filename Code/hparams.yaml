@@ -13,7 +13,8 @@ CNN:
   gpu_vis_dev: '0'
   num_epochs: 10
   batch_size: 16
-  transforms: CNN_Transforms
+  transforms_train: CNN_Train_Transforms
+  transforms_val: CNN_Eval_Transforms
   lr: 0.0001
 
 AlexNet:
@@ -26,7 +27,8 @@ AlexNet:
   gpu_vis_dev: '0'
   num_epochs: 10
   batch_size: 16
-  transforms: AlexNet_Transforms
+  transforms_train: AlexNet_Train_Transforms
+  transforms_val: AlexNet_Eval_Transforms
   net_args: None
   lr: 0.0001
 
@@ -38,7 +40,8 @@ ResNext:
   log_dir: 'logs/resnext'
   dataset_class: "XRayDataset"
   gpu_vis_dev: '0'
-  num_epochs: 10
-  batch_size: 8
-  transforms: ResNext_Transforms
+  num_epochs: 25
+  batch_size: 4
+  transforms_train: ResNext_Train_Transforms
+  transforms_val: ResNext_Eval_Transforms
   lr: 0.0001

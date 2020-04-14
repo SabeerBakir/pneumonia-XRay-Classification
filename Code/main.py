@@ -72,9 +72,10 @@ def main():
     # This is useful if you have multiple custom datasets defined. 
     Dataset = getattr(Datasets, params.dataset_class)
 
-    transf = getattr(model_transforms, params.transforms)()
-    train_data = Dataset(params.data_dir + "/train", transform=transf)
-    val_data = Dataset(params.data_dir + "/val", transform=transf)
+    transf_train = getattr(model_transforms, params.transforms_train)()
+    transf_val = getattr(model_transforms, params.transforms_val)()
+    train_data = Dataset(params.data_dir + "/train", transform=transf_train)
+    val_data = Dataset(params.data_dir + "/val", transform=transf_val)
 
     train_loader = DataLoader(
         train_data, 
