@@ -74,6 +74,7 @@ def main():
 
     transf_train = getattr(model_transforms, params.transforms_train)()
     transf_val = getattr(model_transforms, params.transforms_val)()
+
     train_data = Dataset(params.data_dir + "/train", transform=transf_train)
     val_data = Dataset(params.data_dir + "/val", transform=transf_val)
 
@@ -129,7 +130,9 @@ def main():
         "best_val_epoch": int(np.argmax(val_roc_aucs)+1),
         "model": args.model_name,
         "lr": params.lr,
-        "batch_size": params.batch_size
+        "batch_size": params.batch_size,
+        "transforms_train": str(transf_train),
+        "transforms_val": str(transf_val)
     }
 
     with open(os.path.join(params.log_dir,"{}_{}.json".format(args.model_name,  start_time)), 'w') as f:

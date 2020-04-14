@@ -15,6 +15,7 @@ CNN:
   batch_size: 16
   transforms_train: CNN_Train_Transforms
   transforms_val: CNN_Eval_Transforms
+  net_args: None
   lr: 0.0001
 
 AlexNet:
