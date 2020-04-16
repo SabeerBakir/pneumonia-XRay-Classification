@@ -21,7 +21,7 @@ from sklearn.utils import shuffle
 import models
 from utils import Datasets
 from utils.params import Params
-from utils import model_transforms
+from utils import model_augments
 from utils.plotting import plot_training
 
 
@@ -58,20 +58,11 @@ def main():
     # This is useful if you have multiple custom datasets defined. 
     Dataset = getattr(Datasets, params.dataset_class)
 
-    transf_train = getattr(model_transforms, params.transforms_train)()
-    transf_val = getattr(model_transforms, params.transforms_val)()
+    augments_train = getattr(model_augments, params.augments_train)()
+    augments_val = getattr(model_augments, params.augments_val)()
 
-    augmentations = A.Compose([
-        A.Resize(256, 256),
-        A.CenterCrop(224, 224),
-        A.HorizontalFlip(p=0.2),  # Probability 20%
-        A.ShiftScaleRotate(p=0.2),
-        A.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
-        AToTensor()
-    ])
-
-    train_data = Dataset(params.data_dir + "/train", transform=None, augmentations=augmentations)
-    val_data = Dataset(params.data_dir + "/val", transform=transf_val)
+    train_data = Dataset(params.data_dir + "/train", transform=None, augmentations=augments_train)
+    val_data = Dataset(params.data_dir + "/val", transform=None, augmentations=augments_val)
 
     train_loader = DataLoader(
         train_data, 
