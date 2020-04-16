@@ -30,12 +30,6 @@ def main():
         type=str, 
         help="Pass name of model as defined in hparams.yaml."
         )
-    parser.add_argument(
-        "--write_data",
-        required = False,
-        default=False,
-                help="Set to true to write_data."
-        )
     args = parser.parse_args()
     # Parse our YAML file which has our model parameters. 
     params = Params("hparams.yaml", args.model_name)
@@ -57,17 +51,6 @@ def main():
     val = model_module.val
     
     optimizer = optim.Adam(model.parameters(), lr=params.lr)
-    # Write data if specified in command line arguments. 
-    if args.write_data:
-        data = pd.read_csv('fashionmnist/fashion-mnist_train.csv')
-        test_data = pd.read_csv('fashionmnist/fashion-mnist_test.csv')
-        val_split = round(data.shape[0]*0.2)
-        data = shuffle(data)
-        train_data = data.iloc[val_split:]
-        val_data = data.iloc[:val_split]
-        train_data.to_csv(os.path.join(params.data_dir, "train.csv"), index=False)
-        val_data.to_csv(os.path.join(params.data_dir, "val.csv"), index=False)
-        test_data.to_csv(os.path.join(params.data_dir, "test.csv"), index=False)
 
     # This is useful if you have multiple custom datasets defined. 
     Dataset = getattr(Datasets, params.dataset_class)
