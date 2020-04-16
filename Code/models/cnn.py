@@ -14,7 +14,7 @@ Part of format and full model from pytorch examples repo: https://github.com/pyt
 
 
 class net(nn.Module):
-    def __init__(self, args=None):
+    def __init__(self, **kwargs):
         super(net, self).__init__()
         self.conv1 = nn.Conv2d(1, 32, 3, 1)
         self.conv2 = nn.Conv2d(32, 64, 3, 1)

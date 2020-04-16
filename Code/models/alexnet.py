@@ -10,7 +10,7 @@ from tqdm import tqdm
 from sklearn.metrics import roc_auc_score
 
 
-def net(args=None):
+def net(**kwargs):
     model = torch.hub.load('pytorch/vision:v0.5.0', 'alexnet', pretrained=True)
     return model
 

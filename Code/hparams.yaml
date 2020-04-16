@@ -15,7 +15,7 @@ CNN:
   batch_size: 16
   transforms_train: CNN_Train_Transforms
   transforms_val: CNN_Eval_Transforms
-  net_args: None
+  net_args: {}
   lr: 0.0001
 
 AlexNet:
@@ -30,7 +30,7 @@ AlexNet:
   batch_size: 16
   transforms_train: AlexNet_Train_Transforms
   transforms_val: AlexNet_Eval_Transforms
-  net_args: None
+  net_args: {}
   lr: 0.0001
 
 ResNext:
@@ -45,5 +45,5 @@ ResNext:
   batch_size: 4
   transforms_train: ResNext_Train_Transforms
   transforms_val: ResNext_Eval_Transforms
-  net_args: {freeze_layers: True}
+  net_args: {freeze_layers: False}
   lr: 0.0001

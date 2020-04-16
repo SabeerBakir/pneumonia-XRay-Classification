@@ -47,7 +47,7 @@ def main():
     
     # Load model that has been chosen via the command line arguments. 
     model_module = __import__('.'.join(['models', params.model_name]),  fromlist=['object'])
-    model = model_module.net(params.net_args)
+    model = model_module.net(**params.net_args)
     # Send the model to the chosen device. 
     # To use multiple GPUs
     # model = nn.DataParallel(model)

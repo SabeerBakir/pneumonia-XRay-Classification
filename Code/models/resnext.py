@@ -10,12 +10,12 @@ from tqdm import tqdm
 from sklearn.metrics import roc_auc_score
 
 
-def net(args=None):
+def net(freeze_layers=True, **kwargs):
 
     # Import ResNext
     model = torch.hub.load('pytorch/vision:v0.5.0', 'resnext50_32x4d', pretrained=True)
     # Freeze all the layers for Transfer Learning
-    if args['freeze_layers'] and args is not None:
+    if freeze_layers:
         for param in model.parameters():
             param.requires_grad = False
 
