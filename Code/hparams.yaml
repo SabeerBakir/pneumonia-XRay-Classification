@@ -41,9 +41,9 @@ ResNext:
   log_dir: 'logs/resnext'
   dataset_class: "XRayDataset"
   gpu_vis_dev: '0'
-  num_epochs: 25
+  num_epochs: 2
   batch_size: 4
   transforms_train: ResNext_Train_Transforms
   transforms_val: ResNext_Eval_Transforms
-  net_args: {freeze_layers: False}
+  net_args: {freeze_layers: True}
   lr: 0.0001

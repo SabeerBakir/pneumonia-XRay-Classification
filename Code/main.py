@@ -4,6 +4,9 @@ import time
 import json
 import argparse
 
+import albumentations as A
+from albumentations.pytorch import ToTensorV2 as AToTensor
+
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -58,7 +61,16 @@ def main():
     transf_train = getattr(model_transforms, params.transforms_train)()
     transf_val = getattr(model_transforms, params.transforms_val)()
 
-    train_data = Dataset(params.data_dir + "/train", transform=transf_train)
+    augmentations = A.Compose([
+        A.Resize(256, 256),
+        A.CenterCrop(224, 224),
+        A.HorizontalFlip(p=0.2),  # Probability 20%
+        A.ShiftScaleRotate(p=0.2),
+        A.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+        AToTensor()
+    ])
+
+    train_data = Dataset(params.data_dir + "/train", transform=None, augmentations=augmentations)
     val_data = Dataset(params.data_dir + "/val", transform=transf_val)
 
     train_loader = DataLoader(
