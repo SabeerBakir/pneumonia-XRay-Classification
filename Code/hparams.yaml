@@ -47,3 +47,18 @@ ResNext:
   augments_val: ResNext_Eval_Augments
   net_args: {freeze_layers: True}
   lr: 0.0001
+
+MLP:
+  <<: *DEFAULT
+  model_name: mlp
+  data_dir: "../Datasets/chest_xray"
+  checkpoint_dir: "checkpoints/mlp"
+  log_dir: 'logs/mlp'
+  dataset_class: "XRayDataset"
+  gpu_vis_dev: '0'
+  num_epochs: 10
+  batch_size: 16
+  augments_train: MLP_Train_Augments
+  augments_val: MLP_Eval_Augments
+  net_args: {}
+  lr: 0.0001
