@@ -117,8 +117,8 @@ def main():
         "model": args.model_name,
         "lr": params.lr,
         "batch_size": params.batch_size,
-        "transforms_train": str(transf_train),
-        "transforms_val": str(transf_val)
+        "augments_train": str(augments_train),
+        "augments_val": str(augments_val)
     }
 
     with open(os.path.join(params.log_dir,"{}_{}.json".format(args.model_name,  start_time)), 'w') as f:

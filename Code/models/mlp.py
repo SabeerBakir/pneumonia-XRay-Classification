@@ -19,8 +19,8 @@ https://github.com/pytorch/examples/blob/master/mnist/main.py
 class net(nn.Module):
     def __init__(self, **kwargs):
         super(net, self).__init__()
-        self.l1 = nn.Linear(3*256*256, 256)
-        self.l2 = nn.Linear(256, 128)
+        self.l1 = nn.Linear(3*224*224, 224)
+        self.l2 = nn.Linear(224, 128)
         self.l3 = nn.Linear(128, 64)
         self.l4 = nn.Linear(64, 32)
         self.l5 = nn.Linear(32, 16)
