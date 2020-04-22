@@ -20,7 +20,7 @@ def CNN_Eval_Augments():
     ])
 
 
-def AlexNext_Train_Augments():
+def AlexNet_Train_Augments():
     return Default_Train_Augments()
 
 
