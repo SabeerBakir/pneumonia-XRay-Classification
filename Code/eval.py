@@ -10,8 +10,8 @@ import torch.nn as nn
 import torch.optim as optim
 import torch.nn.functional as F
 from torch.utils.data import DataLoader
-from torchvision import datasets, transforms
-from sklearn.metrics import accuracy_score
+from torchvision import datasets
+from sklearn.metrics import accuracy_score, roc_auc_score
 
 import models 
 from utils import Datasets
@@ -41,7 +41,7 @@ def main():
     model_module = __import__('.'.join(['models', params.model_name]),  fromlist=['object'])
     Dataset = getattr(Datasets, params.dataset_class)
     
-    acc_scores = []
+    roc_auc_scores = []
     for iter_i in range(args.eval_iter):
         print("Training model for iteration {}...".format(iter_i))
         model = model_module.net().to(device)
@@ -53,7 +53,7 @@ def main():
         Dataset = getattr(Datasets, params.dataset_class)
 
         augments_train = getattr(model_augments, params.augments_train)()
-        train_data = Dataset(params.data_dir + "/train", transform=None, augmentations=augments_train)
+        train_data = Dataset(params.data_dir + "/train", augmentations=augments_train)
 
         train_loader = DataLoader(
             train_data, 
@@ -79,26 +79,26 @@ def main():
         test_data_dir = os.path.join(params.data_dir, "test.csv")
         augments_val = getattr(model_augments, params.augments_val)()
 
-        test_data = Dataset(params.data_dir + "/test", transform=None, augmentations=augments_val)
+        test_data = Dataset(params.data_dir + "/test", augmentations=augments_val)
         test_loader = DataLoader(
             test_data, 
             batch_size=params.batch_size,
             shuffle=False
             )
         
-        acc_score = test(model, device, test_loader)
-        print("Accuracy for iteration {}\t {}".format(iter_i, acc_score))
+        roc_auc_score = test(model, device, test_loader)
+        print("ROC AUC for iteration {}\t {}".format(iter_i, roc_auc_score))
 
-        acc_scores.append(float(acc_score))
+        roc_auc_scores.append(float(roc_auc_score))
     logs ={
             "model": model_params["model"], 
             "num_epochs": model_params["best_val_epoch"],
             "lr": model_params['lr'], 
             "batch_size": model_params["batch_size"],
             "eval_iterations": args.eval_iter,
-            "acc_scores": acc_scores,
-            "mean_acc": float(np.mean(acc_scores)),
-            "var_acc": float(np.var(acc_scores)),
+            "roc_auc_scores": roc_auc_scores,
+            "mean_roc_auc": float(np.mean(roc_auc_scores)),
+            "var_roc_auc": float(np.var(roc_auc_scores)),
             }
 
     with open(
