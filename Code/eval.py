@@ -15,6 +15,7 @@ from sklearn.metrics import accuracy_score
 
 import models 
 from utils import Datasets
+from utils import model_augments
 from utils.params import Params
 
 # TODO: update to augments and roc auc
@@ -51,13 +52,8 @@ def main():
         train_data_dir = os.path.join(params.data_dir, "train")
         Dataset = getattr(Datasets, params.dataset_class)
 
-        transf = transforms.Compose([
-            transforms.Grayscale(),
-            transforms.RandomResizedCrop(224),
-            transforms.RandomHorizontalFlip(),
-            transforms.ToTensor()
-        ])
-        train_data = Dataset(params.data_dir + "/train", transform=transf)
+        augments_train = getattr(model_augments, params.augments_train)()
+        train_data = Dataset(params.data_dir + "/train", transform=None, augmentations=augments_train)
 
         train_loader = DataLoader(
             train_data, 
@@ -81,8 +77,9 @@ def main():
         print("Evaluating model for iteration {}...".format(iter_i))
 
         test_data_dir = os.path.join(params.data_dir, "test.csv")
-        
-        test_data = Dataset(params.data_dir + "/test", transform=transf)
+        augments_val = getattr(model_augments, params.augments_val)()
+
+        test_data = Dataset(params.data_dir + "/test", transform=None, augmentations=augments_val)
         test_loader = DataLoader(
             test_data, 
             batch_size=params.batch_size,
