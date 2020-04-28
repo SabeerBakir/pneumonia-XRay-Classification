@@ -61,8 +61,8 @@ def main():
     augments_train = getattr(model_augments, params.augments_train)()
     augments_val = getattr(model_augments, params.augments_val)()
 
-    train_data = Dataset(params.data_dir + "/train", transform=None, augmentations=augments_train)
-    val_data = Dataset(params.data_dir + "/val", transform=None, augmentations=augments_val)
+    train_data = Dataset(params.data_dir + "/train", augmentations=augments_train)
+    val_data = Dataset(params.data_dir + "/val", augmentations=augments_val)
 
     train_loader = DataLoader(
         train_data, 
