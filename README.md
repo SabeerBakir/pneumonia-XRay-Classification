@@ -48,7 +48,7 @@ $ conda env create -f requirements.yaml
 ```
 
 ## How to run
- - After activating the python environment, start a jupyter notebook and open `README.ipynb`.
+ - After activating the python environment, start a jupyter notebook and open `RUN.ipynb`.
 
 ## Contributors
 - [Kacper Twardowski](https://github.com/SinfulCitrus)
