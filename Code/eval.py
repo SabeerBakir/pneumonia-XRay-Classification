@@ -18,7 +18,6 @@ from utils import Datasets
 from utils import model_augments
 from utils.params import Params
 
-# TODO: update to augments and roc auc
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument(
