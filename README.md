@@ -7,14 +7,48 @@ The Dataset is publicly available from Kaggle and can be downloaded from [here](
 ## Setup
 
 ### Anaconda environment
-Import the environment using the `environment.yaml` file using the Anaconda Navigator GUI or you can enter these commands in your shell:
+Import the environment using the `requirements.yaml` file using the Anaconda Navigator GUI or you can enter these commands in your shell:
 ```bash
-$ conda env create -f environment.yaml
+$ conda env create -f requirements.yaml
 ```
 
 
-## Notes
-- The full dataset is not availale from this repository. A small subset of images have been uploaded. To reproduce our results, remove these before conducting experiments.
+## Folder Structure
+```
+┌───Code/
+│   ├───checkpoints/
+│   │   ├───alexnet/
+│   │   ├───cnn/
+│   │   ├───mlp/
+│   │   └───resnext/
+│   ├───figs/
+│   ├───logs/
+│   │   ├───alexnet/
+│   │   │   └───eval_logs/
+│   │   ├───cnn/
+│   │   │   └───eval_logs/
+│   │   ├───mlp/
+│   │   │   └───eval_logs/
+│   │   └───resnext/
+│   │       └───eval_logs/
+│   ├───models/
+│   └───utils/
+└───Datasets/
+    └───chest_xray/
+        ├───test/
+        │   ├───NORMAL/
+        │   └───PNEUMONIA/
+        ├───train/
+        │   ├───NORMAL/
+        │   └───PNEUMONIA/
+        └───val/
+            ├───NORMAL/
+            └───PNEUMONIA/
+
+```
+
+## How to run
+ - After activating the python environment, start a jupyter notebook and open `README.ipynb`.
 
 ## Contributors
 - [Kacper Twardowski](https://github.com/SinfulCitrus)
