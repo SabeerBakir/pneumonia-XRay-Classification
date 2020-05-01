@@ -19,4 +19,6 @@ Code/models/__pycache__/
 
 Code/utils/__pycache__/
 
-Datasets
+Datasets/chest_xray
+
+!Datasets/README.md
